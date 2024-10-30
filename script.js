@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   lengthControl.update = function(totalLength) {
-    this._div.innerHTML = '<h4>Exposed waterways: ' + (totalLength || 0) + ' metres</h4>';
+    var formattedLength = totalLength ? totalLength.toLocaleString(undefined, { maximumFractionDigits: 2 }) : 0;
+    this._div.innerHTML = '<h4>Exposed waterways: ' + formattedLength + ' metres</h4>';
   };
 
   lengthControl.addTo(map);
@@ -40,79 +41,57 @@ document.addEventListener('DOMContentLoaded', function() {
   var layersLoaded = 0;
   var totalLayers = 5; // Total number of layers to load
 
+  // Define the custom LayersControlWithTitle
+  var LayersControlWithTitle = L.Control.Layers.extend({
+    onAdd: function(map) {
+      var container = L.Control.Layers.prototype.onAdd.call(this, map);
+      var title = L.DomUtil.create('div', 'layers-control-title');
+      title.innerHTML = '<strong>Select Year</strong>';
+      container.insertBefore(title, container.firstChild);
+      return container;
+    }
+  });
+
   // Function to check if all layers are loaded
   function checkLayersLoaded() {
     layersLoaded++;
     if (layersLoaded === totalLayers) {
-      // All layers are loaded, define and add the custom map switcher control
-      var MapSwitcherControl = L.Control.extend({
-        options: {
-          position: 'topright'
-        },
-
-        onAdd: function(map) {
-          var container = L.DomUtil.create('div', 'map-switcher-control');
-          container.style.backgroundColor = 'white';
-          container.style.padding = '5px';
-          container.style.borderRadius = '4px';
-
-          // Prevent clicks from propagating to the map
-          L.DomEvent.disableClickPropagation(container);
-
-          // Create buttons for each map
-          var maps = [
-            {name: '1848', layer: layerGroup1, totalLength: totalLength1},
-            {name: '1852', layer: layerGroup2, totalLength: totalLength2},
-            {name: '1891', layer: layerGroup3, totalLength: totalLength3},
-            {name: '1908', layer: layerGroup4, totalLength: totalLength4},
-            {name: '1905-09', layer: layerGroup5, totalLength: totalLength5}
-          ];
-
-          var buttons = [];
-
-          maps.forEach(function(mapInfo, index) {
-            var button = L.DomUtil.create('button', 'map-button', container);
-            button.innerHTML = mapInfo.name;
-            button.style.display = 'block';
-            button.style.marginBottom = '5px';
-            button.style.width = '80px';
-
-            L.DomEvent.on(button, 'click', function(e) {
-              // Remove all layers except lengthControl
-              map.eachLayer(function(layer) {
-                if (layer !== lengthControl) {
-                  map.removeLayer(layer);
-                }
-              });
-              // Add selected layer
-              map.addLayer(mapInfo.layer);
-              // Update length control
-              lengthControl.update(mapInfo.totalLength);
-
-              // Update active button styles
-              buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-              });
-              button.classList.add('active');
-            });
-
-            buttons.push(button);
-
-            // Set the first button as active
-            if (index === 0) {
-              button.classList.add('active');
-            }
-          });
-
-          return container;
-        }
-      });
-
-      var mapSwitcherControl = new MapSwitcherControl();
-      map.addControl(mapSwitcherControl);
+      // All layers are loaded, add the custom layer control with title
+      var baseMaps = {
+        "1848": layerGroup1,
+        "1852": layerGroup2,
+        "1891": layerGroup3,
+        "1908": layerGroup4,
+        "1905-09": layerGroup5
+      };
+      var layersControl = new LayersControlWithTitle(baseMaps, null, { position: 'topright' });
+      layersControl.addTo(map);
 
       // Update length control for initial map
       lengthControl.update(totalLength1);
+
+      // Add event listener for baselayerchange
+      map.on('baselayerchange', function(e) {
+        var totalLength = 0;
+        switch (e.name) {
+          case '1848':
+            totalLength = totalLength1;
+            break;
+          case '1852':
+            totalLength = totalLength2;
+            break;
+          case '1891':
+            totalLength = totalLength3;
+            break;
+          case '1908':
+            totalLength = totalLength4;
+            break;
+          case '1905-09':
+            totalLength = totalLength5;
+            break;
+        }
+        lengthControl.update(totalLength);
+      });
     }
   }
 
@@ -157,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }); // 1908
   var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
     attribution: 'Attribution5'
-  }); // 1905-9
+  }); // 1905-09
 
   // Load each GeoJSON and set up layers
   loadGeoJSON('1848.geojson', basemap1, function(layer, group, length) {
@@ -195,5 +174,4 @@ document.addEventListener('DOMContentLoaded', function() {
     totalLength5 = length;
     checkLayersLoaded();
   });
-
 });

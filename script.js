@@ -60,7 +60,7 @@ function loadGeoJSON(url, basemap, callback) {
 }
 
 // Load each GeoJSON and set up layers
-loadGeoJSON('https://github.com/maaxlong/becks_map/1848.geojson', basemap1, function(layer, group, length) {
+loadGeoJSON('./1848.geojson', basemap1, function(layer, group, length) {
   geojsonLayer1 = layer;
   layerGroup1 = group;
   totalLength1 = length;
@@ -68,25 +68,25 @@ loadGeoJSON('https://github.com/maaxlong/becks_map/1848.geojson', basemap1, func
   lengthControl.update(totalLength1);
 });
 
-loadGeoJSON('https://github.com/maaxlong/becks_map/1852.geojson', basemap2, function(layer, group, length) {
+loadGeoJSON('./1852.geojson', basemap2, function(layer, group, length) {
   geojsonLayer2 = layer;
   layerGroup2 = group;
   totalLength2 = length;
 });
 
-loadGeoJSON('https://github.com/maaxlong/becks_map/1891.geojson', basemap3, function(layer, group, length) {
+loadGeoJSON('./1891.geojson', basemap3, function(layer, group, length) {
   geojsonLayer3 = layer;
   layerGroup3 = group;
   totalLength3 = length;
 });
 
-loadGeoJSON('https://github.com/maaxlong/becks_map/1908.geojson', basemap4, function(layer, group, length) {
+loadGeoJSON('./1908.geojson', basemap4, function(layer, group, length) {
   geojsonLayer4 = layer;
   layerGroup4 = group;
   totalLength4 = length;
 });
 
-loadGeoJSON('https://github.com/maaxlong/becks_map/1905-09.geojson', basemap5, function(layer, group, length) {
+loadGeoJSON('./1905-09.geojson', basemap5, function(layer, group, length) {
   geojsonLayer5 = layer;
   layerGroup5 = group;
   totalLength5 = length;

@@ -89,15 +89,6 @@ var baseMaps = {
 
 L.control.layers(baseMaps).addTo(map);
 
-// Define the bounds of the map
-var bounds = [
-  [53.7808253, -1.7708349],      // Southwest corner
-  [53.804090352, -1.726866479]   // Northeast corner
-];
-
-// Set the maximum bounds of the map
-map.setMaxBounds(bounds);
-
 // Create length control
 var lengthControl = L.control({ position: 'bottomright' });
 

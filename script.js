@@ -31,23 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   lengthControl.addTo(map);
 
-  // Define basemaps
-  var basemap1 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/Bradford/{z}/{x}/{y}.png', {
-    attribution: 'Attribution1'
-  }); // 1848
-  var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
-    attribution: 'Attribution2'
-  }); // 1852
-  var basemap3 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/North/{z}/{x}/{y}.png', {
-    attribution: 'Attribution3'
-  }); // 1891
-  var basemap4 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
-    attribution: 'Attribution4'
-  }); // 1908
-  var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
-    attribution: 'Attribution5'
-  }); // 1905-9
-
   // Initialize variables
   var geojsonLayer1, geojsonLayer2, geojsonLayer3, geojsonLayer4, geojsonLayer5;
   var totalLength1 = 0, totalLength2 = 0, totalLength3 = 0, totalLength4 = 0, totalLength5 = 0;
@@ -61,7 +44,70 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkLayersLoaded() {
     layersLoaded++;
     if (layersLoaded === totalLayers) {
-      // All layers are loaded, add the custom map switcher control
+      // All layers are loaded, define and add the custom map switcher control
+      var MapSwitcherControl = L.Control.extend({
+        options: {
+          position: 'topright'
+        },
+
+        onAdd: function(map) {
+          var container = L.DomUtil.create('div', 'map-switcher-control');
+          container.style.backgroundColor = 'white';
+          container.style.padding = '5px';
+          container.style.borderRadius = '4px';
+
+          // Prevent clicks from propagating to the map
+          L.DomEvent.disableClickPropagation(container);
+
+          // Create buttons for each map
+          var maps = [
+            {name: '1848', layer: layerGroup1, totalLength: totalLength1},
+            {name: '1852', layer: layerGroup2, totalLength: totalLength2},
+            {name: '1891', layer: layerGroup3, totalLength: totalLength3},
+            {name: '1908', layer: layerGroup4, totalLength: totalLength4},
+            {name: '1905-09', layer: layerGroup5, totalLength: totalLength5}
+          ];
+
+          var buttons = [];
+
+          maps.forEach(function(mapInfo, index) {
+            var button = L.DomUtil.create('button', 'map-button', container);
+            button.innerHTML = mapInfo.name;
+            button.style.display = 'block';
+            button.style.marginBottom = '5px';
+            button.style.width = '80px';
+
+            L.DomEvent.on(button, 'click', function(e) {
+              // Remove all layers except lengthControl
+              map.eachLayer(function(layer) {
+                if (layer !== lengthControl) {
+                  map.removeLayer(layer);
+                }
+              });
+              // Add selected layer
+              map.addLayer(mapInfo.layer);
+              // Update length control
+              lengthControl.update(mapInfo.totalLength);
+
+              // Update active button styles
+              buttons.forEach(function(btn) {
+                btn.classList.remove('active');
+              });
+              button.classList.add('active');
+            });
+
+            buttons.push(button);
+
+            // Set the first button as active
+            if (index === 0) {
+              button.classList.add('active');
+            }
+          });
+
+          return container;
+        }
+      });
+
       var mapSwitcherControl = new MapSwitcherControl();
       map.addControl(mapSwitcherControl);
 
@@ -95,6 +141,23 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .catch(error => console.error('Error loading GeoJSON:', error));
   }
+
+  // Define basemaps
+  var basemap1 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/Bradford/{z}/{x}/{y}.png', {
+    attribution: 'Attribution1'
+  }); // 1848
+  var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
+    attribution: 'Attribution2'
+  }); // 1852
+  var basemap3 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/North/{z}/{x}/{y}.png', {
+    attribution: 'Attribution3'
+  }); // 1891
+  var basemap4 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
+    attribution: 'Attribution4'
+  }); // 1908
+  var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
+    attribution: 'Attribution5'
+  }); // 1905-9
 
   // Load each GeoJSON and set up layers
   loadGeoJSON('1848.geojson', basemap1, function(layer, group, length) {
@@ -131,70 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
     layerGroup5 = group;
     totalLength5 = length;
     checkLayersLoaded();
-  });
-
-  // Custom control to switch between maps
-  var MapSwitcherControl = L.Control.extend({
-    options: {
-      position: 'topright'
-    },
-
-    onAdd: function(map) {
-      var container = L.DomUtil.create('div', 'map-switcher-control');
-      container.style.backgroundColor = 'white';
-      container.style.padding = '5px';
-      container.style.borderRadius = '4px';
-
-      // Prevent clicks from propagating to the map
-      L.DomEvent.disableClickPropagation(container);
-
-      // Create buttons for each map
-      var maps = [
-        {name: '1848', layer: layerGroup1, totalLength: totalLength1},
-        {name: '1852', layer: layerGroup2, totalLength: totalLength2},
-        {name: '1891', layer: layerGroup3, totalLength: totalLength3},
-        {name: '1908', layer: layerGroup4, totalLength: totalLength4},
-        {name: '1905-09', layer: layerGroup5, totalLength: totalLength5}
-      ];
-
-      var buttons = [];
-
-      maps.forEach(function(mapInfo, index) {
-        var button = L.DomUtil.create('button', 'map-button', container);
-        button.innerHTML = mapInfo.name;
-        button.style.display = 'block';
-        button.style.marginBottom = '5px';
-        button.style.width = '80px';
-
-        L.DomEvent.on(button, 'click', function(e) {
-          // Remove all layers except lengthControl
-          map.eachLayer(function(layer) {
-            if (layer !== lengthControl) {
-              map.removeLayer(layer);
-            }
-          });
-          // Add selected layer
-          map.addLayer(mapInfo.layer);
-          // Update length control
-          lengthControl.update(mapInfo.totalLength);
-
-          // Update active button styles
-          buttons.forEach(function(btn) {
-            btn.classList.remove('active');
-          });
-          button.classList.add('active');
-        });
-
-        buttons.push(button);
-
-        // Set the first button as active
-        if (index === 0) {
-          button.classList.add('active');
-        }
-      });
-
-      return container;
-    }
   });
 
 });

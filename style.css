@@ -1,27 +1,63 @@
-/* Custom Map Switcher Control Styles */
+/* style.css */
 
-.map-switcher-control {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 5px;
-  border-radius: 4px;
+/* Map Container */
+#map {
+  width: 100%;
+  height: 600px; /* Adjust the height as needed */
 }
 
-.map-switcher-control button {
-  display: block;
-  width: 80px;
-  margin-bottom: 5px;
-  padding: 5px;
+/* Layers Control Title */
+.layers-control-title {
+  padding: 5px 10px;
+  font-size: 14px;
   background: #fff;
-  border: 1px solid #ccc;
-  cursor: pointer;
+  border-bottom: 1px solid #ccc;
   text-align: center;
-}
-
-.map-switcher-control button:hover {
-  background: #e0e0e0;
-}
-
-.map-switcher-control button.active {
-  background: #ccc;
   font-weight: bold;
+}
+
+/* Length Control */
+.length-control {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Leaflet Layers Control Checkbox Labels */
+.leaflet-control-layers label {
+  font-size: 14px;
+}
+
+/* Optional: Style for the Layers Control Container */
+.leaflet-control-layers {
+  box-shadow: none;
+}
+
+/* Optional: Style for the Layers Control Base Layers Section */
+.leaflet-control-layers-base {
+  padding: 5px 10px;
+}
+
+/* Optional: Style for Hover Effect on Layer Labels */
+.leaflet-control-layers label:hover {
+  background-color: #f0f0f0;
+}
+
+/* Optional: Adjust the Width of the Layers Control */
+.leaflet-control-layers-expanded {
+  width: auto;
+}
+
+/* Optional: Style for the Map Attribution */
+.leaflet-control-attribution {
+  font-size: 12px;
+}
+
+/* Optional: Style for the Zoom Control Buttons */
+.leaflet-control-zoom a {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
 }

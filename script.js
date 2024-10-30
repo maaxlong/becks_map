@@ -5,8 +5,6 @@ var latitude = (53.7808253 + 53.804090352) / 2;  // ~53.792457826
 var longitude = (-1.7708349 + -1.726866479) / 2; // ~-1.7488506895
 var zoomLevel = 15;
 
-var map = L.map('map').setView([latitude, longitude], zoomLevel);
-
 var bounds = [
   [53.7808253, -1.7708349],      // Southwest corner
   [53.804090352, -1.726866479]   // Northeast corner

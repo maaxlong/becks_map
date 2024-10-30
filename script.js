@@ -23,13 +23,13 @@ var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-i
   attribution: 'Attribution2'
 }); // 1852
 var basemap3 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/North/{z}/{x}/{y}.png', {
-  attribution: 'Attribution2'
+  attribution: 'Attribution3'
 }); // 1891
 var basemap4 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
-  attribution: 'Attribution2'
+  attribution: 'Attribution4'
 }); // 1908
 var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
-  attribution: 'Attribution2'
+  attribution: 'Attribution5'
 }); // 1905-9
 
 // Initialize variables

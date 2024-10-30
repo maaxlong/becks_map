@@ -16,7 +16,7 @@ var bounds = [
 map.setMaxBounds(bounds);
 
 // Define basemaps
-var basemap1 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/Bradford/{z}/{x}/{y}.pngg', {
+var basemap1 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/Bradford/{z}/{x}/{y}.png', {
   attribution: 'Attribution1'
 }); // 1848
 var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
@@ -60,7 +60,7 @@ function loadGeoJSON(url, basemap, callback) {
 }
 
 // Load each GeoJSON and set up layers
-loadGeoJSON('./1848.json', basemap1, function(layer, group, length) {
+loadGeoJSON('https://github.com/maaxlong/becks_map/1848.geojson', basemap1, function(layer, group, length) {
   geojsonLayer1 = layer;
   layerGroup1 = group;
   totalLength1 = length;
@@ -68,25 +68,25 @@ loadGeoJSON('./1848.json', basemap1, function(layer, group, length) {
   lengthControl.update(totalLength1);
 });
 
-loadGeoJSON('./1852.json', basemap2, function(layer, group, length) {
+loadGeoJSON('https://github.com/maaxlong/becks_map/1852.geojson', basemap2, function(layer, group, length) {
   geojsonLayer2 = layer;
   layerGroup2 = group;
   totalLength2 = length;
 });
 
-loadGeoJSON('./1891.json', basemap3, function(layer, group, length) {
+loadGeoJSON('https://github.com/maaxlong/becks_map/1891.geojson', basemap3, function(layer, group, length) {
   geojsonLayer3 = layer;
   layerGroup3 = group;
   totalLength3 = length;
 });
 
-loadGeoJSON('./1908.json', basemap4, function(layer, group, length) {
+loadGeoJSON('https://github.com/maaxlong/becks_map/1908.geojson', basemap4, function(layer, group, length) {
   geojsonLayer4 = layer;
   layerGroup4 = group;
   totalLength4 = length;
 });
 
-loadGeoJSON('./1905-09.json', basemap5, function(layer, group, length) {
+loadGeoJSON('https://github.com/maaxlong/becks_map/1905-09.geojson', basemap5, function(layer, group, length) {
   geojsonLayer5 = layer;
   layerGroup5 = group;
   totalLength5 = length;

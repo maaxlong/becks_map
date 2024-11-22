@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "1852": layerGroup2,
         "1891": layerGroup3,
         "1908": layerGroup4,
-        "1905-09": layerGroup5
+        "1909": layerGroup5
       };
       var layersControl = new LayersControlWithTitle(baseMaps, null, { position: 'topright' });
       layersControl.addTo(map);
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
           case '1908':
             totalLength = totalLength4;
             break;
-          case '1905-09':
+          case '1909':
             totalLength = totalLength5;
             break;
         }
@@ -122,20 +122,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Define basemaps
-  var basemap1 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/Bradford/{z}/{x}/{y}.png', {
-    attribution: 'Attribution1'
+  var basemap1 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/town-england/Bradford/{z}/{x}/{y}.png', {
+    attribution: 'National Library of Scotland'
   }); // 1848
   var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
-    attribution: 'Attribution2'
+    attribution: 'National Library of Scotland'
   }); // 1852
-  var basemap3 = L.tileLayer('https://geo.nls.uk/mapdata3/os/town_england/North/{z}/{x}/{y}.png', {
-    attribution: 'Attribution3'
+  var basemap3 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/town-england/North/{z}/{x}/{y}.png', {
+    attribution: 'National Library of Scotland'
   }); // 1891
   var basemap4 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
-    attribution: 'Attribution4'
+    attribution: 'National Library of Scotland'
   }); // 1908
   var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
-    attribution: 'Attribution5'
+    attribution: 'National Library of Scotland'
   }); // 1905-09
 
   // Load each GeoJSON and set up layers
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkLayersLoaded();
   });
 
-  loadGeoJSON('1905-09.geojson', basemap5, function(layer, group, length) {
+  loadGeoJSON('1909.geojson', basemap5, function(layer, group, length) {
     geojsonLayer5 = layer;
     layerGroup5 = group;
     totalLength5 = length;

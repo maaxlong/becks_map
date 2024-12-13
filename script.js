@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Define latitude, longitude, and zoom level
   var latitude = (53.7808253 + 53.804090352) / 2;      // Approximately 53.792457826
   var longitude = (-1.7708349 + -1.726866479) / 2;     // Approximately -1.7488506895
-  var zoomLevel = 13; // Adjust as needed
+  var zoomLevel = 14; // Adjust as needed
 
   // Initialize the map
   var map = L.map('map').setView([latitude, longitude], zoomLevel);
@@ -146,19 +146,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Define basemaps
   var basemap1 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/town-england/Bradford/{z}/{x}/{y}.png', {
     bounds: bounds, 
-    minZoom: 13,
+    minZoom: 14,
   	maxZoom: 20,
     attribution: 'National Library of Scotland'
   }); // 1852
   var basemap2 = L.tileLayer('https://allmaps.xyz/maps/682c0c5a6a17c868/{z}/{x}/{y}.png', {
     bounds: bounds, 
-    minZoom: 13,
+    minZoom: 14,
   	maxZoom: 20,
     attribution: 'National Library of Scotland'
   }); // 1873
   var basemap3 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
     bounds: bounds,
-    minZoom: 13,
+    minZoom: 14,
   	maxZoom: 20,
     attribution: 'National Library of Scotland'
   }); // 1908

@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
   lengthControl.addTo(map);
 
   // Initialize variables
-  var geojsonLayer1, geojsonLayer2, geojsonLayer3, geojsonLayer4, geojsonLayer5;
-  var totalLength1 = 0, totalLength2 = 0, totalLength3 = 0, totalLength4 = 0, totalLength5 = 0;
-  var layerGroup1, layerGroup2, layerGroup3, layerGroup4, layerGroup5;
+  var geojsonLayer1, geojsonLayer2, geojsonLayer3;
+  var totalLength1 = 0, totalLength2 = 0, totalLength3 = 0;
+  var layerGroup1, layerGroup2, layerGroup3;
 
   // Initialize a counter for loaded layers
   var layersLoaded = 0;
-  var totalLayers = 5; // Total number of layers to load
+  var totalLayers = 3; // Total number of layers to load
 
   // Define the custom LayersControlWithTitle
   var LayersControlWithTitle = L.Control.Layers.extend({
@@ -58,11 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (layersLoaded === totalLayers) {
       // All layers are loaded, add the custom layer control with title
       var baseMaps = {
-        "1848": layerGroup1,
-        "1852": layerGroup2,
-        "1891": layerGroup3,
-        "1908": layerGroup4,
-        "1909": layerGroup5
+        "1852": layerGroup1,
+        "1873": layerGroup2,
+        "1908": layerGroup3
       };
       var layersControl = new LayersControlWithTitle(baseMaps, null, { position: 'topright' });
       layersControl.addTo(map);
@@ -74,20 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
       map.on('baselayerchange', function(e) {
         var totalLength = 0;
         switch (e.name) {
-          case '1848':
+          case '1852':
             totalLength = totalLength1;
             break;
-          case '1852':
+          case '1873':
             totalLength = totalLength2;
             break;
-          case '1891':
-            totalLength = totalLength3;
-            break;
           case '1908':
-            totalLength = totalLength4;
-            break;
-          case '1909':
-            totalLength = totalLength5;
+            totalLength = totalLength3;
             break;
         }
         lengthControl.update(totalLength);
@@ -124,22 +116,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Define basemaps
   var basemap1 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/town-england/Bradford/{z}/{x}/{y}.png', {
     attribution: 'National Library of Scotland'
-  }); // 1848
-  var basemap2 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
-    attribution: 'National Library of Scotland'
   }); // 1852
-  var basemap3 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/os/town-england/North/{z}/{x}/{y}.png', {
+  var basemap2 = L.tileLayer('https://allmaps.xyz/maps/682c0c5a6a17c868/{z}/{x}/{y}.png', {
     attribution: 'National Library of Scotland'
-  }); // 1891
-  var basemap4 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
+  }); // 1873
+  var basemap3 = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
     attribution: 'National Library of Scotland'
   }); // 1908
-  var basemap5 = L.tileLayer('https://api.maptiler.com/tiles/uk-osgb10k1888/{z}/{x}/{y}.jpg?key=yTjHGySI1O0GBeIuFBYT', {
-    attribution: 'National Library of Scotland'
-  }); // 1905-09
+
 
   // Load each GeoJSON and set up layers
-  loadGeoJSON('1848.geojson', basemap1, function(layer, group, length) {
+  loadGeoJSON('1852.geojson', basemap1, function(layer, group, length) {
     geojsonLayer1 = layer;
     layerGroup1 = group;
     totalLength1 = length;
@@ -147,31 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
     checkLayersLoaded();
   });
 
-  loadGeoJSON('1852.geojson', basemap2, function(layer, group, length) {
+  loadGeoJSON('1873.geojson', basemap2, function(layer, group, length) {
     geojsonLayer2 = layer;
     layerGroup2 = group;
     totalLength2 = length;
     checkLayersLoaded();
   });
 
-  loadGeoJSON('1891.geojson', basemap3, function(layer, group, length) {
+  loadGeoJSON('1908.geojson', basemap3, function(layer, group, length) {
     geojsonLayer3 = layer;
     layerGroup3 = group;
     totalLength3 = length;
     checkLayersLoaded();
   });
-
-  loadGeoJSON('1908.geojson', basemap4, function(layer, group, length) {
-    geojsonLayer4 = layer;
-    layerGroup4 = group;
-    totalLength4 = length;
-    checkLayersLoaded();
-  });
-
-  loadGeoJSON('1909.geojson', basemap5, function(layer, group, length) {
-    geojsonLayer5 = layer;
-    layerGroup5 = group;
-    totalLength5 = length;
-    checkLayersLoaded();
-  });
-});
+})

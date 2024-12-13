@@ -2,7 +2,7 @@
 
 /* Map Container */
 #map {
- width: 100vw;  /* Full viewport width */
+  width: 100vw;  /* Full viewport width */
   height: 100vh; /* Adjust the height as needed */
 }
 
@@ -16,22 +16,16 @@
   font-weight: bold;
 }
 
-/* Length Control */
-.length-control {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 8px;
-  border-radius: 4px;
-  font-size: 14px;
+/* Layers Control (Select Year) */
+.leaflet-control-layers {
+  right: 20px; /* Move it 20px from the left of the viewport */
+  top: 10px;  /* Optional: Adjust the vertical position */
+  box-shadow: none;
 }
 
 /* Leaflet Layers Control Checkbox Labels */
 .leaflet-control-layers label {
   font-size: 14px;
-}
-
-/* Optional: Style for the Layers Control Container */
-.leaflet-control-layers {
-  box-shadow: none;
 }
 
 /* Optional: Style for the Layers Control Base Layers Section */
@@ -47,6 +41,17 @@
 /* Optional: Adjust the Width of the Layers Control */
 .leaflet-control-layers-expanded {
   width: auto;
+}
+
+/* Length Control */
+.length-control {
+  position: absolute; /* Ensure it's absolutely positioned */
+  right: 20px;         /* Move it 20px from the left of the viewport */
+  bottom: 50px;       /* Adjust the vertical position as needed */
+  background: rgba(255, 255, 255, 0.8); /* Keep the original style */
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 /* Optional: Style for the Map Attribution */
